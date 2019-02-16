@@ -1,18 +1,60 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no">
+        <title>Nikita Buevich — product manager and travel lover</title>
+        <meta name="description" content="Nikita Buevich — product manager in IT. What's better than to make ideas reality, using modern technologies and smart friendly UI? Loves travellings, jazz and active sports in free time.">
+        <link rel="stylesheet" href="css/main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="static/favicon-32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="static/favicon-48.png" sizes="48x48">
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+           ym(51475726, "init", {
+                id:51475726,
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/51475726" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+    </head>
+    <body>
+        <main class="common__container">
+            <header class="common__header">
+                <div class="header__tabs">
+                    <div class="header__tab header__tab--instagram">
+                        <a href="https://www.instagram.com/nbuevich/" class="header__link" title="Instagram" onclick="yaCounter51475726.reachGoal('click_social_network', {network: 'instagram'}); return true;">Instagram</a>
+                    </div>
+                    <div class="header__tab header__tab--twitter">
+                        <a href="https://twitter.com/nbuevich/" class="header__link" title="Twitter" onclick="yaCounter51475726.reachGoal('click_social_network', {network: 'twitter'}); return true;">Twitter</a>
+                    </div>
+                    <div class="header__tab header__tab--facebook">
+                        <a href="https://www.facebook.com/nbuevich" class="header__link" title="Facebook" onclick="yaCounter51475726.reachGoal('click_social_network', {network: 'facebook'}); return true;">Facebook</a>
+                    </div>
+                    <div class="header__tab header__tab--telegram">
+                        <a href="https://t.me/nbuevich" class="header__link" title="Telegram" onclick="yaCounter51475726.reachGoal('click_social_network', {network: 'telegram'}); return true;">Telegram</a>
+                    </div>
+                </div>
+            </header>
+            <main class="common__content">
+                <section class="content__post">
+                    <img class="content__img-sqr" src="static/nbuevich.jpg">
+                    <h1 class="content__title">Hello!</h1>
+                    <p>I'm Nikita Buevich. Some words about me will be here...</p>
+                </section>
+            </main>
+            <footer class="common__footer">
+                <div class="footer__reserved">2018. It is nothing to copy here yet ¯\_(ツ)_/¯</div>
+            </footer>
+        </main>
+    </body>
+</html>
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
-
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
-</div>
