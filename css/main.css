@@ -1,5 +1,6 @@
 body {
     font-size: 16px;
+    line-height: 1.5;
     font-family: Helvetica, Arial, sans-serif;
     color: #212121;
     margin: 0;
@@ -33,7 +34,7 @@ img {
 .common__content {
     display: flex;
     box-sizing: border-box;
-    padding: 60px 0 40px;
+    padding: 40px 0;
     flex-grow: 1;
 }
 
@@ -42,6 +43,16 @@ img {
     padding: 20px 0;
     display: flex;
     border-top: 1px dotted #E0E0E0;
+}
+
+.common__link,
+.common__link:visited {
+    color: #9E9E9E;
+}
+
+.common__link:hover,
+.common__link:active {
+    color: #0091EA;
 }
 
 /* ==== Header ==== */
@@ -69,6 +80,10 @@ img {
     text-decoration: none;
 }
 
+.header__link--bold {
+    font-weight: bold;
+}
+
 .header__link,
 .header__link:visited {
     color: #9E9E9E;
@@ -84,7 +99,7 @@ img {
         display: none;
     }
 
-    .header__tab {
+    .header__tab:not(.header__tab--blog) {
         width: 46px;
         height: 46px;
         font-size: 0;
@@ -118,6 +133,10 @@ img {
 
     .header__tab--telegram {
         background-image: url('../static/socials/telegram.svg');
+    }
+    
+    .header__tab--blog {
+        line-height: 46px;
     }
 }
 
