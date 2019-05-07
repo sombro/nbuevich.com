@@ -3,7 +3,6 @@ layout: post
 title: Мои путешествия 📌
 categories: [travelling]
 tags: [travelling, pinned_post]
-excerpt: false
 ---
 
 ## По Миру 🌍  ##  
@@ -19,5 +18,5 @@ excerpt: false
 
 ## По России 🇷🇺  ##
 
-<a href="https://www.instagram.com/explore/tags/velodagestan/">Дагестан</a> [17.09.2019 — 28.09.2019]
+<a href="https://www.instagram.com/explore/tags/velodagestan/">Дагестан</a> [17.09.2019 — 28.09.2019]  
 
