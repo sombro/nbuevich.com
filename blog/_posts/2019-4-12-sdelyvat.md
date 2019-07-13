@@ -4,8 +4,6 @@ title: "«Сделывать»"
 categories: [business]
 tags: [business, lifestyle, time_management]
 ---
-![Puzzle](/static/blog/20190412/puzzle.jpg)  
-  
 На днях закончилась программа по развитию продуктового мышления [Product Mindset](https://productsense.io/mindset), в которой я участвовал. На самом [первом митапе](https://youtu.be/eQ_VcSg3V7k) [Юра Агеев](https://www.facebook.com/ageev.yuri) рассказывал про [разницу между “<em>делать</em>” и “<em>сделать</em>”](https://bureau.ru/bb/soviet/20160121/), и изобрёл такое, не очень красивое, но верное слово — “сделывать”. Суть в том, чтобы не просто потратить время, а в том, чтобы получить, возможно, не идеальный, но результат.  
 
 <!--more-->
