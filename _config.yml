@@ -11,6 +11,11 @@ description: Product manager and travel lover
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://nbuevich.com/static/nbuevich.jpg
 
+title: Nikita Buevich
+author: nbuevich
+summary: 'Product manager and travel lover'
+image: '/static/nbuevich.jpg'
+
 #
 # Flags below are optional
 #
