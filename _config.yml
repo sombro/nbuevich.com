@@ -18,7 +18,7 @@ avatar: https://nbuevich.com/static/nbuevich.jpg
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email: nikitabuevich@gmail.com
+  email:
   facebook: nbuevich
   flickr:
   github:
@@ -30,6 +30,7 @@ footer-links:
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   youtube: # channel/<your_long_string> or user/<user-name>
   googleplus: # anything in your profile username that comes after plus.google.com/
+  telegram: nbuevich
 
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
