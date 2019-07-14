@@ -293,6 +293,6 @@ footer {
 @import "highlights";
 @import "svg-icons";
 
-.post h1 + .entry img {
+.post h1 + .entry>img {
     margin-bottom: 20px;
 }
