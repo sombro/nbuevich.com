@@ -271,10 +271,6 @@ nav {
     margin-top: 20px;
     display: inline-block;
   }
-
-  .poster {
-      max-height: 500px;
-  }
 }
 
 .wrapper-footer {
@@ -298,4 +294,9 @@ footer {
 
 .post h1 + .entry>img {
     margin-bottom: 20px;
+}
+
+
+.post .poster {
+    max-height: 500px;
 }
