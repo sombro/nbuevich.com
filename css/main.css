@@ -94,6 +94,10 @@ img {
     color: #0091EA;
 }
 
+.post__poster {
+    max-height: 500px;
+}
+
 @media screen and (max-width: 480px) {
     .header__tab:not(:last-child)::after {
         display: none;
