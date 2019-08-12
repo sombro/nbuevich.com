@@ -8,6 +8,6 @@ summary: ''
 image: ''
 ---
 
-![Once upon a time in Hollywood](/static/blog/posters/once-upon-a-time-in-hollywood.jpg)  
+<img src="/static/blog/posters/once-upon-a-time-in-hollywood.jpg" alt="Once upon a time in Hollywood" height="300">  
 
 Кто знает, зачем вот это всё первые 140 минут, расскажите и мне пожалуйста.
