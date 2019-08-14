@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Плавание"
+title: "«Плавание»"
 categories: [lifestyle]
 tags: [lifestyle, philosophy, travelling]
 ---
