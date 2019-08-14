@@ -46,6 +46,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 30px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+
   a {
     color: inherit;
   }
@@ -156,8 +159,8 @@ img {
 }
 
 .masthead {
-  padding: 20px 0;
-  border-bottom: 1px solid $lightGray;
+  padding: 17px 0;
+  border-bottom: 1px dotted #E0E0E0;
 
   @include mobile {
     text-align: center;
@@ -193,12 +196,11 @@ img {
 
 .site-name {
   margin: 0;
-  color: $darkGray;
+  color: #212121;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: $helvetica;
   font-weight: 300;
   font-size: 28px;
-  letter-spacing: 1px;
 }
 
 .site-description {
@@ -213,8 +215,8 @@ img {
 
 nav {
   float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  margin-top: 21px; // @TODO: Vertically middle align
+  font-family: $helvetica;
   font-size: 18px;
 
   @include mobile {
@@ -225,11 +227,10 @@ nav {
   }
 
   a {
-    margin-left: 20px;
-    color: $darkGray;
+    font-size: 16px;
+    margin-left: 18px;
+    color: #9E9E9E;
     text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
 
     @include mobile {
       margin: 0 10px;
@@ -296,7 +297,28 @@ footer {
     margin-bottom: 20px;
 }
 
-
 .post .poster {
     max-height: 500px;
+}
+
+.post__subinfo {
+    font-size: 12px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    color: #9E9E9E;
+}
+
+.post__category {
+    color: #9E9E9E;
+    font-size: 12px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.tags {
+    margin-top: 20px;
+    color: #9E9E9E;
+    font-size: 14px;
 }

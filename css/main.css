@@ -18,7 +18,7 @@ img {
     min-height: 100vh;
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,6 +29,7 @@ img {
     padding: 40px 0;
     display: flex;
     border-bottom: 1px dotted #E0E0E0;
+    justify-content: space-between;
 }
 
 .common__content {
@@ -137,6 +138,22 @@ img {
     
     .header__tab--blog {
         line-height: 46px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .header__tab:not(.header__tab--blog) {
+        width: 42px;
+        height: 42px;
+    }
+
+    .header__tab:not(:first-child) {
+        padding-left: 0;
+        margin-left: 20px;
+    }
+
+    .header__tab--blog {
+        line-height: 42px;
     }
 }
 

@@ -2,7 +2,7 @@
 layout: post
 title: "«Плавание»"
 categories: [lifestyle]
-tags: [lifestyle, philosophy, travelling]
+tags: [lifestyle, philosophy, travel]
 ---
 
 Решил рассказать, что же со мной происходит последнее время. За последние 150 дней (5 месяцев) я нахожусь в путешествиях 50 дней.  

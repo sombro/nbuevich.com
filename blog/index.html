@@ -8,26 +8,28 @@ layout: default
             {% assign category = post.categories[1] %}
         {% endif %}
         <article class="post {{category}}">
-
+            <div class="post__category">{{category}}</div>
             <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
             <!--Category-->
-            
-            
-            <!--Date-->
-            {% assign today_date = 'now' | date: '%s' %}
-            {% if post.date %}
+            <div class="post__subinfo">
+                <!--Date-->
                 {% assign today_date = 'now' | date: '%s' %}
-                {% assign post_date = post.date | date: '%s' %}
-                {% if today_date >= post_date %}
-                    {{ post.date | date: "%e %B %Y" }}
+                {% if post.date %}
+                    {% assign today_date = 'now' | date: '%s' %}
+                    {% assign post_date = post.date | date: '%s' %}
+                    {% if today_date >= post_date %}
+                        <span>{{ post.date | date: "%e %B %Y" }}</span>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
+                <!--Reading time-->
+                <span>{% include reading-time.html %}</span>
+            </div>
             {% if post.content contains site.excerpt_separator %}
                 <div class="entry">
                     {{ post.excerpt | remove: '<p>' | remove: '</p>' }}
                 </div>
 
-                <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read more{% include reading-time.html %}...</a>
+                <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read more...</a>
             {% else %}
                 {{ post.content }}
             {% endif %}

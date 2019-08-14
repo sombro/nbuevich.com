@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Дагестан. День 0. 17.09.2018
-categories: [travelling]
-tags: [velodagestan, bike, biketrip, velo, travelling, mountains, Russia, Caucasus, Dagestan]
+title: Дагестан. День 0.
+categories: [travel]
+tags: [velodagestan, bike, biketrip, velo, travel, mountains, Russia, Caucasus, Dagestan]
 ---
 
 ## Кизилюрт — Дубки  ##  
