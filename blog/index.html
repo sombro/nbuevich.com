@@ -4,25 +4,12 @@ layout: default
 
 <div class="posts">
     {% for post in site.posts %}
-        {% if post.categories %}
-            {% assign category = post.categories[1] %}
-        {% endif %}
-        <article class="post {{category}}">
-            <div class="post__category">{{category}}</div>
+        <article class="post">
+            {% include categories.html %}
             <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-            <!--Category-->
             <div class="post__subinfo">
-                <!--Date-->
-                {% assign today_date = 'now' | date: '%s' %}
-                {% if post.date %}
-                    {% assign today_date = 'now' | date: '%s' %}
-                    {% assign post_date = post.date | date: '%s' %}
-                    {% if today_date >= post_date %}
-                        <span>{{ post.date | date: "%e %B %Y" }}</span>
-                    {% endif %}
-                {% endif %}
-                <!--Reading time-->
-                <span>{% include reading-time.html %}</span>
+                {% include date.html %}
+                {% include reading-time.html %}
             </div>
             {% if post.content contains site.excerpt_separator %}
                 <div class="entry">
@@ -34,15 +21,7 @@ layout: default
                 {{ post.content }}
             {% endif %}
 
-            <!--Tags-->
-            {% if post.tags %}
-            <div class="tags">
-                Tags:
-                {% for tag in post.tags %}
-                    <span class="tag">#{{ tag }} </span>
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% include tags.html %}
         </article>
     {% endfor %}
 </div>

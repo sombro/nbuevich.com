@@ -293,8 +293,8 @@ footer {
 @import "highlights";
 @import "svg-icons";
 
-.post h1 + .entry>img {
-    margin-bottom: 20px;
+.entry > img {
+    margin-bottom: 15px;
 }
 
 .post .poster {
@@ -304,9 +304,16 @@ footer {
 .post__subinfo {
     font-size: 12px;
     margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
     color: #9E9E9E;
+    overflow: hidden;
+}
+
+.post__date {
+    float: left;
+}
+
+.post__reading-time {
+    float: right;
 }
 
 .post__category {
@@ -317,7 +324,7 @@ footer {
     text-transform: uppercase;
 }
 
-.tags {
+.post__tags {
     margin-top: 20px;
     color: #9E9E9E;
     font-size: 14px;

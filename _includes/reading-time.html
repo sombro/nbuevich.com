@@ -1,6 +1,6 @@
 {% capture words %}
-  {{ post.content | number_of_words | minus: 250 }}
+    {{ post.content | number_of_words }}
 {% endcapture %}
 {% unless words contains "-" %}
-  {{words | plus: 250 | divided_by: 180 | append: " min read" | prepend: "🕑"}}
+    <span class="post__reading-time">{{words | plus: 250 | divided_by: 180 | append: " min read" | prepend: "🕑"}}</span>
 {% endunless %}

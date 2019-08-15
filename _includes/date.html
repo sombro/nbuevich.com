@@ -1,0 +1,8 @@
+{% assign today_date = 'now' | date: '%s' %}
+{% if post.date %}
+    {% assign today_date = 'now' | date: '%s' %}
+    {% assign post_date = post.date | date: '%s' %}
+    {% if today_date >= post_date %}
+        <span class="post__date">{{ post.date | date: "%e %B %Y" }}</span>
+    {% endif %}
+{% endif %}
