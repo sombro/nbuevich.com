@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Учиться учиться
-categories: [lifestyle]
-tags: [lifestyle]
+categories: [life]
+tags: [life]
 ---
 
 Я учусь учиться.  
