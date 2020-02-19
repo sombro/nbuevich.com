@@ -8,6 +8,6 @@ summary: 'Ролик о поездке в Армению и Грузию зим�
 image: '/static/blog/20200218/armenia-georgia-2020.jpg'
 ---
 
-<iframe width="720" height="405" src="https://www.youtube.com/embed/of8mCWGj1-I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
+<div class="videoWrapper">
+    <iframe src="https://www.youtube.com/embed/of8mCWGj1-I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
