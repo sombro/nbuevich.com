@@ -3,7 +3,7 @@ layout: post
 title: Гив ми либерти (2019)
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

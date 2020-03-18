@@ -3,7 +3,7 @@ layout: post
 title: Холивар. История рунета (2019)
 categories: [movies]
 tags: [movies, films, cinema, series]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

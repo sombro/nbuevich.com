@@ -3,7 +3,7 @@ layout: post
 title: 'Дело Ричарда Джуэлла (2019)'
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: 'Люблю смотреть биографические фильмы, основанные на реальных событиях. А американцы умеют такие фильмы снимать. Особенно это интересно, когда дело касается каких-то значимых, и даже знаковых событий в мировой (в данном случае, американской) истории. '
 image: '/static/blog/posters/richard_jewell.jpg'
 ---

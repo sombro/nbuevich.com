@@ -3,7 +3,7 @@ layout: post
 title: Про инвестирование 📈💸
 categories: [business]
 tags: [finance, business, investment, stocks, money]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: 'Ответы на часто задаваемые вопросы про инвестирование в ценные бумаги'
 image: '/static/blog/20190713/buffett.jpg'
 ---

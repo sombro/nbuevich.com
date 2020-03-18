@@ -3,7 +3,7 @@ layout: post
 title: Области тьмы (2011)
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

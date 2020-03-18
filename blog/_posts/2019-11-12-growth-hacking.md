@@ -3,7 +3,7 @@ layout: post
 title: "Growth Hacking: как и зачем тестировать тонны гипотез"
 categories: [business]
 tags: [business, product, management]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: 'Никита Буевич — Growth Hacking: как и зачем тестировать тонны гипотез'
 image: '/static/blog/20191112/growth-hacking.png'
 ---

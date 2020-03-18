@@ -3,7 +3,7 @@ layout: post
 title: А кому сейчас хорошо?
 categories: [business]
 tags: [finance, business, econimics, stocks, money]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: 'Глобальный экономический кризис, стоимость акций падает, экономике плохо. Но денег в мире постоянное количество. Если где-то убывает, где-то должно прибывать? Попытаюсь разобраться, куда же в эпоху кризиса утекают все деньги? Кому сейчас хорошо?'
 image: '/static/blog/20200318/balance.jpg'
 ---

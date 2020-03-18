@@ -3,7 +3,7 @@ layout: post
 title: Going postal (2010)
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

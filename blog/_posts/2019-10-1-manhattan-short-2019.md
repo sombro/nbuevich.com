@@ -3,7 +3,7 @@ layout: post
 title: Manhattan Short Festival (2019)
 categories: [movies]
 tags: [movies, films, cinema, festival, short]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

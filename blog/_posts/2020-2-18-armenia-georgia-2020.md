@@ -3,7 +3,7 @@ layout: post
 title: "🇦🇲🇬🇪 Армения + Грузия [27 января — 2 февраля]"
 categories: [travel]
 tags: [travel, mountains, Armenia, Georgia, Caucasus]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: 'Ролик о поездке в Армению и Грузию зимой 2020'
 image: '/static/blog/20200218/armenia-georgia-2020.jpg'
 ---

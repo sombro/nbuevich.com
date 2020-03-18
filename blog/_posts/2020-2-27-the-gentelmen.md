@@ -3,7 +3,7 @@ layout: post
 title: 'Джентельмены (2019)'
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: '2 часа стиля от Гая Ричи'
 image: '/static/blog/posters/the-gentelmen.jpg'
 ---

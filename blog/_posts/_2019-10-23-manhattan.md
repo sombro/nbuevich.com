@@ -3,7 +3,7 @@ layout: post
 title: Манхэттен (1979)
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---

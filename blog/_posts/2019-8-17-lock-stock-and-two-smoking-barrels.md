@@ -3,7 +3,7 @@ layout: post
 title: Карты, деньги, два ствола (1998)
 categories: [movies]
 tags: [movies, films, cinema]
-author: nbuevich
+author: 'Nikita Buevich'
 summary: ''
 image: ''
 ---
