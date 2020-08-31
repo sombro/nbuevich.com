@@ -1,5 +1,6 @@
 .cv__text-block {
     display: flex;
+    font-size: 14px;
 }
 
 .cv__col-left {
@@ -11,7 +12,7 @@
 .cv__col-right {
     min-width: 180px;
     width: 180px;
-    margin-top: 32px;
+    margin-top: 38px;
     font-size: 14px;
 }
 
