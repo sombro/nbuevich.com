@@ -159,10 +159,111 @@ img {
 
 /* ==== Content ==== */
 
+.content__text-block {
+    display: flex;
+}
+
+.content__col-left {
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 40px;
+}
+
+.content__col-right {
+    min-width: 180px;
+    width: 180px;
+    margin-top: 32px;
+    font-size: 14px;
+}
+
+.content__img-with-text {
+    display: flex;
+    align-items: center;
+    // margin-bottom: 40px;
+}
+
+.content__contents {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .content__img-sqr {
     width: 250px;
     height: 250px;
     margin-bottom: 40px;
+}
+
+.content__img-sqr--cv {
+    margin-bottom: 0;
+    margin-right: 20px;
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.content__title {
+    font-size: 28px;
+    margin: 0;
+}
+
+.content__title-sub {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin: -5px 0 0 0;
+    color: #9E9E9E;
+}
+
+.content__subtitle {
+    font-size: 20px;
+    margin-top: 40px;
+}
+.content__subtitle--icon::before {
+    display: inline-block;
+    width: 30px;
+    margin-left: -30px;
+}
+
+.content__subtitle--profile::before {
+    content: '👨‍💼';
+}
+
+.content__subtitle--employment::before {
+    content: '💼';
+}
+
+.content__subtitle--own_projects::before {
+    content: '📊';
+}
+
+.content__subtitle--education::before {
+    content: '👨‍🎓';
+}
+
+.content__subtitle--courses::before {
+    content: '📚';
+}
+
+.content__subtitle--references::before {
+    content: '📢';
+}
+
+.content__h3 {
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.content__dates {
+    color: #9E9E9E;
+    font-size: 12px;
+    font-weight: 300;
+    margin: -20px 0 0 0;
+}
+
+.content__micro-title {
+    font-weight: 300;
+    color: #9E9E9E;
+    margin-bottom: 10px;
 }
 
 /* ==== Footer ==== */
