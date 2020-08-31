@@ -1,0 +1,99 @@
+.cv__text-block {
+    display: flex;
+}
+
+.cv__col-left {
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 40px;
+}
+
+.cv__col-right {
+    min-width: 180px;
+    width: 180px;
+    margin-top: 32px;
+    font-size: 14px;
+}
+
+.cv__img-with-text {
+    display: flex;
+    align-items: center;
+}
+
+.cv__cvs {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.cv__img-sqr {
+    margin-bottom: 0;
+    margin-right: 20px;
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.cv__title {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cv__title-sub {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin: -5px 0 0 0;
+    color: #9E9E9E;
+}
+
+.cv__subtitle {
+    font-size: 20px;
+    margin-top: 40px;
+}
+.cv__subtitle-icon::before {
+    display: inline-block;
+    width: 30px;
+    margin-left: -30px;
+}
+
+.cv__subtitle--profile::before {
+    content: '👨‍💼';
+}
+
+.cv__subtitle--employment::before {
+    content: '💼';
+}
+
+.cv__subtitle--own_projects::before {
+    content: '📊';
+}
+
+.cv__subtitle--education::before {
+    content: '👨‍🎓';
+}
+
+.cv__subtitle--courses::before {
+    content: '📚';
+}
+
+.cv__subtitle--references::before {
+    content: '📢';
+}
+
+.cv__h3 {
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.cv__dates {
+    color: #9E9E9E;
+    font-size: 12px;
+    font-weight: 300;
+    margin: -20px 0 0 0;
+}
+
+.cv__micro-title {
+    font-weight: 300;
+    color: #9E9E9E;
+    margin-bottom: 10px;
+}
