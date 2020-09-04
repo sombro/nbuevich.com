@@ -1,6 +1,11 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .cv__text-block {
     display: flex;
     font-size: 14px;
+    position: relative;
 }
 
 .cv__col-left {
@@ -97,4 +102,42 @@
     font-weight: 300;
     color: #9E9E9E;
     margin-bottom: 10px;
+}
+
+.cv__contents-wrapper{
+    position: sticky;
+    top: 170px;
+    margin-top: 50px;
+    margin-left: -220px;
+    align-self: start;
+}
+
+@media screen and (max-width: 1239px) {
+    .cv__contents-wrapper {
+        display: none;
+    }
+}
+
+.cv__contents {
+    width: 220px;
+}
+
+.cv__nav-ul {
+    font-size: 12px;
+    font-weight: 300;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cv__nav-ul--included {
+    padding-left: 20px;
+}
+
+.cv__contents li.active > a {
+    font-weight: bold;
+}
+
+.cv__contents a {
+    transition: all 50ms ease-in-out;
 }
