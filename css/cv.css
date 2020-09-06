@@ -24,6 +24,19 @@ html {
 .cv__img-with-text {
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.cv__save {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 12px;
+}
+
+.cv__save::before {
+    content: ' ⬇️';
+    text-decoration: none;
 }
 
 .cv__cvs {
@@ -134,10 +147,14 @@ html {
     padding-left: 20px;
 }
 
+.cv__nav-ul--included a {
+    text-decoration: none;
+}
+
 .cv__contents li.active > a {
     font-weight: bold;
 }
 
 .cv__contents a {
-    transition: all 50ms ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
