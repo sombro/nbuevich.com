@@ -334,6 +334,17 @@ footer {
     font-size: 14px;
 }
 
+.common__inline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.common__inline-list li {
+  display: inline;
+  margin-right: 10px;
+}
+
 /* ==== Embed videos ==== */
 
 .videoWrapper {
