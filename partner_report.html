@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Statistics Report · ExpoFP</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #1a202c; font-size: 13px; }
+
+/* ── Header ─────────────────────────────────────── */
+header { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%); color: white; padding: 26px 40px 22px; }
+header h1 { font-size: 21px; font-weight: 800; letter-spacing: -.3px; }
+header p  { font-size: 12px; opacity: .7; margin-top: 5px; }
+
+/* ── Nav tabs ────────────────────────────────────── */
+.nav { background: #1a3a5c; display: flex; gap: 2px; padding: 0 40px; }
+.nav button {
+  background: none; border: none; color: rgba(255,255,255,.6);
+  padding: 12px 20px; font-size: 12px; font-weight: 600; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all .2s;
+  font-family: inherit; letter-spacing: .2px;
+}
+.nav button:hover { color: white; }
+.nav button.active { color: white; border-bottom-color: #63B3ED; background: rgba(255,255,255,.07); }
+
+/* ── Layout ──────────────────────────────────────── */
+.tab { display: none; }
+.tab.active { display: block; }
+.container { max-width: 1400px; margin: 0 auto; padding: 26px 24px; }
+
+/* ── Cards ───────────────────────────────────────── */
+.card { background: white; border-radius: 10px; padding: 20px 22px; box-shadow: 0 1px 6px rgba(0,0,0,.08); margin-bottom: 18px; }
+.card h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #4a5568; margin-bottom: 14px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+/* ── KPIs ────────────────────────────────────────── */
+.kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 18px; }
+.kpi { background: white; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 6px rgba(0,0,0,.08); border-top: 3px solid #2E75B6; }
+.kpi.g { border-top-color: #375623; }
+.kpi.o { border-top-color: #E97132; }
+.kpi.p { border-top-color: #7B3F9E; }
+.kpi.r { border-top-color: #C53030; }
+.kpi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #718096; }
+.kpi-value { font-size: 26px; font-weight: 800; color: #1a202c; margin: 5px 0 2px; }
+.kpi-sub   { font-size: 11px; color: #718096; }
+
+/* ── Insights ────────────────────────────────────── */
+.insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.insight { background: white; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 6px rgba(0,0,0,.08); display: flex; gap: 14px; align-items: flex-start; }
+.insight-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+.insight-title { font-size: 12px; font-weight: 700; color: #2d3748; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.insight-body  { font-size: 12px; color: #4a5568; line-height: 1.55; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+.tag.red    { background: #FED7D7; color: #C53030; }
+.tag.green  { background: #C6F6D5; color: #276749; }
+.tag.blue   { background: #BEE3F8; color: #2B6CB0; }
+.tag.orange { background: #FEEBC8; color: #C05621; }
+.tag.purple { background: #E9D8FD; color: #6B46C1; }
+
+/* ── Data Tables ──────────────────────────────────── */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.data { border-collapse: collapse; font-size: 11px; white-space: nowrap; width: 100%; }
+table.data th {
+  background: #1F4E79; color: white;
+  padding: 8px 10px; text-align: center; font-weight: 600; position: sticky; top: 0; z-index: 2;
+}
+table.data th.month-hdr { background: #2E75B6; font-size: 10px; }
+table.data th.itogo-hdr { background: #375623; }
+table.data th.sub { background: #D6E4F0; color: #1a202c; font-size: 10px; font-weight: 600; padding: 5px 8px; }
+table.data th.sub-g { background: #E2EFDA; color: #1a202c; font-size: 10px; font-weight: 600; padding: 5px 8px; }
+table.data td { padding: 7px 10px; border-bottom: 1px solid #EDF2F7; text-align: right; }
+table.data td.label { text-align: left; font-weight: 600; background: #D6E4F0; color: #1a202c; position: sticky; left: 0; z-index: 1; white-space: nowrap; }
+table.data td.cnt { text-align: center; color: #2B6CB0; font-weight: 700; }
+table.data td.empty { color: #CBD5E0; text-align: center; }
+table.data tr:nth-child(even) td:not(.label) { background: #F7FAFC; }
+table.data tr.total-row td { background: #1F4E79 !important; color: white; font-weight: 700; }
+table.data tr.total-row td.label { background: #1F4E79 !important; color: white; }
+table.data tr.mean-row td { background: #FFF9C4 !important; }
+table.data tr.mean-row td.label { background: #FFF9C4 !important; color: #1a202c; }
+table.data tr.med-row td { background: #FFE0B2 !important; }
+table.data tr.med-row td.label { background: #FFE0B2 !important; color: #1a202c; }
+table.data td.itogo { background: #E2EFDA; font-weight: 700; color: #375623; }
+table.data tr.total-row td.itogo { background: #375623 !important; color: white; }
+
+/* ── Summary table ───────────────────────────────── */
+table.summary { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.summary th { background: #1F4E79; color: white; padding: 9px 12px; text-align: left; font-weight: 600; }
+table.summary td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; }
+table.summary tr:nth-child(even) td { background: #F7FAFC; }
+.bar-cell { display: flex; align-items: center; gap: 8px; }
+.bar { height: 9px; border-radius: 5px; flex-shrink: 0; }
+.pct { color: #718096; font-size: 11px; }
+
+/* ── Chart sizing ────────────────────────────────── */
+.chart-wrap canvas { max-height: 240px; }
+.chart-wrap-tall canvas { max-height: 300px; }
+
+footer { text-align: center; padding: 22px; font-size: 11px; color: #a0aec0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📊 Partner Statistics Report</h1>
+  <p>ExpoFP · Paid expos only · Test expos excluded · May 2025 – April 2026</p>
+</header>
+
+<nav class="nav">
+  <button class="active" onclick="showTab('insights')">💡 Insights</button>
+  <button onclick="showTab('charts')">📈 Charts</button>
+  <button onclick="showTab('v1')">📋 Table: Months → Rows</button>
+  <button onclick="showTab('v2')">📋 Table: Partners → Rows</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TAB 1: INSIGHTS                                  -->
+<!-- ════════════════════════════════════════════════ -->
+<div id="tab-insights" class="tab active">
+<div class="container">
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Total Revenue</div>
+      <div class="kpi-value">$756K</div>
+      <div class="kpi-sub">12-month period</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-label">Total Deals</div>
+      <div class="kpi-value">269</div>
+      <div class="kpi-sub">avg 22 / month</div>
+    </div>
+    <div class="kpi o">
+      <div class="kpi-label">Avg Deal Value</div>
+      <div class="kpi-value">$2,811</div>
+      <div class="kpi-sub">across all partners</div>
+    </div>
+    <div class="kpi p">
+      <div class="kpi-label">Best Month</div>
+      <div class="kpi-value">Apr 2026</div>
+      <div class="kpi-sub">$113,500 · 39 deals</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-label">Weakest Month</div>
+      <div class="kpi-value">Mar 2026</div>
+      <div class="kpi-sub">$17,200 · 8 deals</div>
+    </div>
+  </div>
+
+  <div class="insights-grid">
+
+    <div class="insight">
+      <div class="insight-icon">⚠️</div>
+      <div>
+        <div class="insight-title">Swapcard Concentration Risk <span class="tag red">Risk</span></div>
+        <div class="insight-body">Swapcard alone accounts for <strong>$358,600 (47% of revenue)</strong> and <strong>126 out of 269 deals (47%)</strong>. The business is critically dependent on a single partner — losing them would cut revenue nearly in half overnight.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">🚀</div>
+      <div>
+        <div class="insight-title">April 2026 — All-Time Record <span class="tag green">Growth</span></div>
+        <div class="insight-body"><strong>39 deals · $113,500</strong> — the strongest month in the entire period. That's <strong>6.6× more revenue</strong> than the worst month (March 2026) and well above any prior peak. Strong multi-partner contribution: Swapcard, ExpoPlatform, and Grip all fired simultaneously.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">📈</div>
+      <div>
+        <div class="insight-title">ExpoPlatform Breakout in January <span class="tag blue">Trend</span></div>
+        <div class="insight-body">ExpoPlatform hit <strong>16 deals ($39,000) in January 2026</strong> — their best month by a wide margin (typical range: 1–5). This single month contributed 25% of their entire year's revenue. Worth understanding what drove it.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">🏆</div>
+      <div>
+        <div class="insight-title">Grip — Most Consistent Partner <span class="tag green">Reliable</span></div>
+        <div class="insight-body">Grip is the <strong>only partner present in all 12 months</strong>. While it lacks massive spikes, it delivers a steady baseline: 49–51 deals, $121,700 total. A dependable anchor to the portfolio.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💎</div>
+      <div>
+        <div class="insight-title">Amego — Highest Avg Deal Value <span class="tag purple">Premium</span></div>
+        <div class="insight-body">Only <strong>4 deals in 3 months</strong>, but avg deal value of <strong>$4,500</strong> — the highest of all partners. In February 2026, a single $10,000 deal. Low volume but high quality — worth nurturing for scale.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">😴</div>
+      <div>
+        <div class="insight-title">March 2026 — Steep Drop <span class="tag red">Drop</span></div>
+        <div class="insight-body">Just <strong>8 deals · $17,200</strong>. Only 3 partners active. Came immediately after a decent February ($42,500). Could be post-winter seasonality or pipeline gap — worth monitoring in 2026.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">🔍</div>
+      <div>
+        <div class="insight-title">Sept = Oct 2025 — Identical Data <span class="tag orange">Verify</span></div>
+        <div class="insight-body">September and October 2025 show <strong>exactly the same numbers</strong> (35 deals, $109,800). This is statistically unlikely. The October screenshot showed loading spinners — the data may not have rendered yet when the screenshot was taken.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <div>
+        <div class="insight-title">Cloud Touch — High Value, Low Volume <span class="tag blue">Upside</span></div>
+        <div class="insight-body">Avg deal value of <strong>$3,685</strong> (2nd highest), active in 8 months. December 2025 had a single <strong>$15,600 deal</strong> — an outlier. If volume can be scaled up, Cloud Touch could become a top-3 revenue driver.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">📉</div>
+      <div>
+        <div class="insight-title">Popshap — Choppy Presence <span class="tag orange">Inconsistent</span></div>
+        <div class="insight-body">Active in only <strong>6 of 12 months</strong>, often with gaps. Lowest avg deal value at <strong>$1,788</strong>. Despite 17 deals, totals just $30,400. Needs a strategy conversation — is this partner investable?</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">📊</div>
+      <div>
+        <div class="insight-title">Top 3 = 84% of Revenue <span class="tag red">Concentration</span></div>
+        <div class="insight-body">Swapcard + ExpoPlatform + Grip account for <strong>$639,100 out of $756,400 (84.5%)</strong>. The remaining 7 partners share just 15.5%. Portfolio diversification is a key strategic priority.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Conclusions box -->
+  <div class="card">
+    <h2>📝 Key Conclusions</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px;line-height:1.7;color:#4a5568;">
+      <div>
+        <p style="margin-bottom:10px"><strong style="color:#C53030">🔴 Risks:</strong></p>
+        <p>· Near-total dependence on Swapcard (47%). Any churn there is catastrophic.</p>
+        <p>· Strong seasonality with unexplained dips (Jul, Mar).</p>
+        <p>· 6 of 10 partners contribute under 5% of revenue each — long tail that isn't pulling weight.</p>
+        <p>· Oct 2025 data integrity concern — needs verification.</p>
+      </div>
+      <div>
+        <p style="margin-bottom:10px"><strong style="color:#276749">🟢 Opportunities:</strong></p>
+        <p>· Cloud Touch and Amego show premium deal values — invest in growing their pipelines.</p>
+        <p>· ExpoPlatform proved capable of a 4× monthly surge (Jan 2026). Understand the trigger and replicate.</p>
+        <p>· April 2026 all-time high suggests strong upward momentum heading into summer 2026.</p>
+        <p>· Grip's 12-month consistency is a foundation — could serve as a benchmark for other partners.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TAB 2: CHARTS                                    -->
+<!-- ════════════════════════════════════════════════ -->
+<div id="tab-charts" class="tab">
+<div class="container">
+
+  <div class="card chart-wrap">
+    <h2>📈 Monthly Revenue Trend</h2>
+    <canvas id="revChart"></canvas>
+  </div>
+
+  <div class="grid-2">
+    <div class="card chart-wrap">
+      <h2>🏢 Revenue by Partner (Stacked)</h2>
+      <canvas id="stackChart"></canvas>
+    </div>
+    <div class="card chart-wrap">
+      <h2>📦 Deal Count — Top 4 Partners</h2>
+      <canvas id="cntChart"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card chart-wrap">
+      <h2>💰 Avg Deal Value by Partner ($)</h2>
+      <canvas id="avgChart"></canvas>
+    </div>
+    <div class="card chart-wrap">
+      <h2>🥧 Revenue Share</h2>
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 Partner Summary</h2>
+    <table class="summary">
+      <thead>
+        <tr>
+          <th>Partner</th><th>Deals</th><th>Revenue</th><th>Revenue Share</th><th>Avg Deal</th><th>Active Months</th><th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="summaryTbody"></tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TAB 3: TABLE V1 (Months = rows)                 -->
+<!-- ════════════════════════════════════════════════ -->
+<div id="tab-v1" class="tab">
+<div class="container">
+  <div class="card" style="padding:16px">
+    <h2>Partners → Columns · Months → Rows &nbsp;|&nbsp; Values: Deals / Revenue / Avg Deal</h2>
+    <p style="font-size:11px;color:#718096;margin-bottom:12px">Partners ordered by total revenue (desc). Empty cells = no activity that month.</p>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="tbl-wrap" id="tableV1Wrap"></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- TAB 4: TABLE V2 (Partners = rows)               -->
+<!-- ════════════════════════════════════════════════ -->
+<div id="tab-v2" class="tab">
+<div class="container">
+  <div class="card" style="padding:16px">
+    <h2>Partners → Rows · Months → Columns &nbsp;|&nbsp; Values: Deals / Revenue / Avg Deal</h2>
+    <p style="font-size:11px;color:#718096;margin-bottom:12px">Partners ordered by total revenue (desc). Empty cells = no activity that month.</p>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="tbl-wrap" id="tableV2Wrap"></div>
+  </div>
+</div>
+</div>
+
+<footer>ExpoFP · Partner Statistics · May 2025 – April 2026 · Paid expos only</footer>
+
+<script>
+// ── Data ────────────────────────────────────────────
+const PARTNERS = ['Swapcard','ExpoPlatform','Grip','Cloud Touch','Popshap',
+                  'Amego','Hyve','Personatech','Crowd Connected','BW Events Tech'];
+const MONTHS   = ['May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25',
+                  'Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'];
+const MONTHS_FULL = ['May 2025','Jun 2025','Jul 2025','Aug 2025','Sep 2025','Oct 2025',
+                     'Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
+
+const RAW = {
+  'Swapcard':      [[1,2200],[6,10700],[4,12400],[16,41600],[26,78700],[26,78700],[12,29100],[5,7800],[10,32700],[2,4600],[0,0],[18,60100]],
+  'ExpoPlatform':  [[1,2700],[3,14300],[1,1200],[4,14300],[4,14200],[4,14200],[5,16300],[3,9200],[16,39000],[4,6900],[1,3000],[8,23500]],
+  'Grip':          [[4,13500],[2,8800],[0,0],[5,7200],[2,7200],[2,7200],[3,8100],[9,21000],[5,12100],[4,12100],[6,13100],[9,18600]],
+  'Cloud Touch':   [[1,1000],[0,0],[0,0],[1,3400],[2,7400],[2,7400],[3,7500],[1,15600],[2,4500],[0,0],[1,1100],[0,0]],
+  'Popshap':       [[3,4700],[0,0],[0,0],[4,6200],[0,0],[0,0],[3,6800],[0,0],[1,1000],[5,8800],[0,0],[1,2900]],
+  'Amego':         [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[1,1300],[0,0],[0,0],[1,10000],[0,0],[2,6700]],
+  'Hyve':          [[0,0],[1,2000],[0,0],[0,0],[1,2300],[1,2300],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
+  'Personatech':   [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[1,3100],[0,0],[0,0],[0,0],[0,0],[0,0]],
+  'Crowd Connected':[[0,0],[1,2400],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],
+  'BW Events Tech':[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[1,1700]],
+};
+
+const COLORS = ['#2E75B6','#E97132','#375623','#5BA4C8','#A8C5A0',
+                '#7B3F9E','#C9A227','#C0392B','#1ABC9C','#95A5A6'];
+
+function fmt(v) { return v ? '$' + v.toLocaleString() : '—'; }
+function avg(c, r) { return c > 0 ? Math.round(r/c) : null; }
+
+// Aggregates
+const pTot = {}, pMean = {}, pMed = {};
+PARTNERS.forEach(p => {
+  const active = RAW[p].filter(([c]) => c > 0);
+  const tc = active.reduce((s,[c]) => s+c, 0);
+  const tr = active.reduce((s,[,r]) => s+r, 0);
+  const avgs = active.map(([c,r]) => r/c);
+  const counts = active.map(([c]) => c);
+  const revs   = active.map(([,r]) => r);
+  const med = arr => { const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:Math.round((s[m-1]+s[m])/2); };
+  const mean = arr => arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : null;
+  pTot[p]  = { cnt: tc, rev: tr, avgDeal: avg(tc,tr), months: active.length };
+  pMean[p] = active.length ? { cnt: mean(counts), rev: mean(revs), avgDeal: mean(avgs) } : { cnt:null,rev:null,avgDeal:null };
+  pMed[p]  = active.length ? { cnt: med(counts), rev: med(revs), avgDeal: Math.round(med(avgs)) } : { cnt:null,rev:null,avgDeal:null };
+});
+
+// Monthly totals
+const mTot = MONTHS.map((_,i) => {
+  const tc = PARTNERS.reduce((s,p) => s+RAW[p][i][0], 0);
+  const tr = PARTNERS.reduce((s,p) => s+RAW[p][i][1], 0);
+  return { cnt:tc, rev:tr, avgDeal: avg(tc,tr) };
+});
+const mMean = {
+  cnt: Math.round(mTot.reduce((s,m)=>s+m.cnt,0)/mTot.length),
+  rev: Math.round(mTot.reduce((s,m)=>s+m.rev,0)/mTot.length),
+  avgDeal: Math.round(mTot.reduce((s,m)=>s+(m.cnt>0?m.rev/m.cnt:0),0)/mTot.filter(m=>m.cnt>0).length),
+};
+const sortedRevs = [...mTot.map(m=>m.rev)].sort((a,b)=>a-b);
+const sortedCnts = [...mTot.map(m=>m.cnt)].sort((a,b)=>a-b);
+const sortedAvgs = [...mTot.map(m=>m.cnt>0?m.rev/m.cnt:0)].sort((a,b)=>a-b);
+const med2 = arr => { const m=Math.floor(arr.length/2); return arr.length%2?Math.round(arr[m]):Math.round((arr[m-1]+arr[m])/2); };
+const mMed = { cnt: med2(sortedCnts), rev: med2(sortedRevs), avgDeal: med2(sortedAvgs) };
+const TOTAL_REV = mTot.reduce((s,m)=>s+m.rev,0);
+const TOTAL_CNT = mTot.reduce((s,m)=>s+m.cnt,0);
+
+// ── Tab switching ────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Charts ───────────────────────────────────────────
+function buildCharts() {
+  // Revenue trend
+  new Chart(document.getElementById('revChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHS_FULL,
+      datasets: [{
+        label: 'Revenue ($)',
+        data: mTot.map(m=>m.rev),
+        backgroundColor: mTot.map(m => m.rev===Math.max(...mTot.map(x=>x.rev)) ? '#375623' : '#2E75B6'),
+        borderRadius: 5,
+      },{
+        type: 'line', label: 'Trend',
+        data: mTot.map(m=>m.rev),
+        borderColor:'#E97132', borderWidth:2.5,
+        pointRadius:4, pointBackgroundColor:'#E97132',
+        fill:false, tension:.35, yAxisID:'y'
+      }]
+    },
+    options: { responsive:true, plugins:{legend:{display:false}},
+      scales:{ y:{ ticks:{ callback: v=>'$'+(v/1000).toFixed(0)+'K', font:{size:11} }, grid:{color:'#EEF'} } } }
+  });
+
+  // Stacked bar
+  new Chart(document.getElementById('stackChart'), {
+    type:'bar',
+    data:{
+      labels: MONTHS,
+      datasets: PARTNERS.slice(0,6).map((p,i)=>({
+        label:p, data:RAW[p].map(([,r])=>r),
+        backgroundColor:COLORS[i], stack:'s', borderRadius:2
+      }))
+    },
+    options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:11}}},
+      scales:{x:{stacked:true,ticks:{font:{size:10}}},y:{stacked:true,ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K',font:{size:10}}}}}
+  });
+
+  // Deals line chart
+  new Chart(document.getElementById('cntChart'), {
+    type:'line',
+    data:{
+      labels: MONTHS,
+      datasets: PARTNERS.slice(0,4).map((p,i)=>({
+        label:p, data:RAW[p].map(([c])=>c||null),
+        borderColor:COLORS[i], backgroundColor:COLORS[i]+'22',
+        borderWidth:2.5, pointRadius:4, fill:false, tension:.3
+      }))
+    },
+    options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:11}}},
+      scales:{y:{beginAtZero:true,ticks:{font:{size:11}}}}}
+  });
+
+  // Avg deal horizontal bar
+  const avgVals = PARTNERS.map(p=>pTot[p].avgDeal||0);
+  new Chart(document.getElementById('avgChart'), {
+    type:'bar',
+    data:{
+      labels:PARTNERS,
+      datasets:[{
+        label:'Avg Deal ($)',
+        data:avgVals,
+        backgroundColor: avgVals.map(v=>v>=4000?'#375623':v>=3000?'#2E75B6':'#BEE3F8'),
+        borderRadius:4
+      }]
+    },
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{callback:v=>'$'+v.toLocaleString(),font:{size:10}}},y:{ticks:{font:{size:10}}}}}
+  });
+
+  // Pie chart
+  new Chart(document.getElementById('pieChart'), {
+    type:'doughnut',
+    data:{
+      labels:PARTNERS,
+      datasets:[{data:PARTNERS.map(p=>pTot[p].rev), backgroundColor:COLORS, borderWidth:2, borderColor:'white'}]
+    },
+    options:{responsive:true,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}},cutout:'55%'}
+  });
+
+  // Summary table
+  const tbody = document.getElementById('summaryTbody');
+  const maxRev = Math.max(...PARTNERS.map(p=>pTot[p].rev));
+  const notes = {
+    'Swapcard':'⚠️ Over-reliance risk',
+    'ExpoPlatform':'🚀 Jan 2026 breakout',
+    'Grip':'🏆 Most consistent (12/12 months)',
+    'Cloud Touch':'💡 High avg deal, room to grow',
+    'Popshap':'📉 Low avg deal, inconsistent',
+    'Amego':'💎 Highest avg deal value',
+    'Hyve':'Only 3 months active',
+    'Personatech':'1 deal in 12 months',
+    'Crowd Connected':'1 deal in 12 months',
+    'BW Events Tech':'1 deal in 12 months',
+  };
+  PARTNERS.forEach((p,i)=>{
+    const d = pTot[p];
+    const pct = (d.rev/TOTAL_REV*100).toFixed(1);
+    const bw = Math.round(d.rev/maxRev*140);
+    tbody.innerHTML += `<tr>
+      <td><strong>${p}</strong></td>
+      <td style="text-align:center;color:#2B6CB0;font-weight:700">${d.cnt}</td>
+      <td>$${d.rev.toLocaleString()}</td>
+      <td><div class="bar-cell"><div class="bar" style="width:${bw}px;background:${COLORS[i]}"></div><span class="pct">${pct}%</span></div></td>
+      <td>$${(d.avgDeal||0).toLocaleString()}</td>
+      <td style="text-align:center">${d.months}/12</td>
+      <td style="font-size:11px;color:#4a5568">${notes[p]||''}</td>
+    </tr>`;
+  });
+  // Totals row
+  tbody.innerHTML += `<tr style="background:#1F4E79;color:white;font-weight:700">
+    <td style="color:white"><strong>TOTAL</strong></td>
+    <td style="text-align:center;color:white">${TOTAL_CNT}</td>
+    <td style="color:white">$${TOTAL_REV.toLocaleString()}</td>
+    <td style="color:white">100%</td>
+    <td style="color:white">$${Math.round(TOTAL_REV/TOTAL_CNT).toLocaleString()}</td>
+    <td></td><td></td>
+  </tr>`;
+}
+
+// ── Table V1: Partners = columns, Months = rows ─────
+function buildTableV1() {
+  let h = '<table class="data"><thead>';
+  // Row 1: partner names
+  h += '<tr><th rowspan="2" style="min-width:90px;position:sticky;left:0;z-index:3">Month</th>';
+  PARTNERS.forEach(p => { h += `<th colspan="3" class="month-hdr">${p}</th>`; });
+  h += '<th colspan="3" class="itogo-hdr">TOTAL / Month</th></tr>';
+  // Row 2: sub-headers
+  h += '<tr>';
+  const N = PARTNERS.length + 1;
+  for (let i = 0; i < N; i++) {
+    const cls = i === PARTNERS.length ? 'sub-g' : 'sub';
+    h += `<th class="${cls}">Deals</th><th class="${cls}">Revenue</th><th class="${cls}">Avg</th>`;
+  }
+  h += '</tr></thead><tbody>';
+
+  // Data rows
+  MONTHS.map((m, mi) => {
+    h += `<tr><td class="label">${MONTHS_FULL[mi]}</td>`;
+    PARTNERS.forEach(p => {
+      const [c, r] = RAW[p][mi];
+      const a = avg(c,r);
+      h += c > 0
+        ? `<td class="cnt">${c}</td><td>${fmt(r)}</td><td>${fmt(a)}</td>`
+        : `<td class="empty">—</td><td class="empty">—</td><td class="empty">—</td>`;
+    });
+    const mt = mTot[mi];
+    h += `<td class="itogo cnt">${mt.cnt}</td><td class="itogo">${fmt(mt.rev)}</td><td class="itogo">${fmt(mt.avgDeal)}</td>`;
+    h += '</tr>';
+  });
+  h += '</tbody><tfoot>';
+
+  // Total row
+  h += '<tr class="total-row"><td class="label">TOTAL</td>';
+  PARTNERS.forEach(p => {
+    const d=pTot[p];
+    h += `<td>${d.cnt||'—'}</td><td>${fmt(d.rev)}</td><td>${fmt(d.avgDeal)}</td>`;
+  });
+  h += `<td class="itogo">${TOTAL_CNT}</td><td class="itogo">${fmt(TOTAL_REV)}</td><td class="itogo">${fmt(Math.round(TOTAL_REV/TOTAL_CNT))}</td></tr>`;
+
+  // Mean row
+  h += '<tr class="mean-row"><td class="label">Avg (active mo.)</td>';
+  PARTNERS.forEach(p => {
+    const d=pMean[p];
+    h += `<td>${d.cnt??'—'}</td><td>${d.rev?fmt(d.rev):'—'}</td><td>${d.avgDeal?fmt(d.avgDeal):'—'}</td>`;
+  });
+  h += `<td>${mMean.cnt}</td><td>${fmt(mMean.rev)}</td><td>${fmt(mMean.avgDeal)}</td></tr>`;
+
+  // Median row
+  h += '<tr class="med-row"><td class="label">Median (active mo.)</td>';
+  PARTNERS.forEach(p => {
+    const d=pMed[p];
+    h += `<td>${d.cnt??'—'}</td><td>${d.rev?fmt(d.rev):'—'}</td><td>${d.avgDeal?fmt(d.avgDeal):'—'}</td>`;
+  });
+  h += `<td>${mMed.cnt}</td><td>${fmt(mMed.rev)}</td><td>${fmt(mMed.avgDeal)}</td></tr>`;
+  h += '</tfoot></table>';
+  document.getElementById('tableV1Wrap').innerHTML = h;
+}
+
+// ── Table V2: Partners = rows, Months = columns ─────
+function buildTableV2() {
+  let h = '<table class="data"><thead>';
+  // Row 1: month names
+  h += '<tr><th rowspan="2" style="min-width:130px;position:sticky;left:0;z-index:3">Partner</th>';
+  MONTHS.forEach(m => { h += `<th colspan="3" class="month-hdr">${m}</th>`; });
+  h += '<th colspan="3" class="itogo-hdr">TOTAL / Partner</th></tr>';
+  // Row 2: sub-headers
+  h += '<tr>';
+  const N = MONTHS.length + 1;
+  for (let i=0;i<N;i++) {
+    const cls = i===MONTHS.length ? 'sub-g' : 'sub';
+    h += `<th class="${cls}">Deals</th><th class="${cls}">Revenue</th><th class="${cls}">Avg</th>`;
+  }
+  h += '</tr></thead><tbody>';
+
+  PARTNERS.forEach(p => {
+    h += `<tr><td class="label">${p}</td>`;
+    MONTHS.forEach((_,mi) => {
+      const [c,r]=RAW[p][mi]; const a=avg(c,r);
+      h += c > 0
+        ? `<td class="cnt">${c}</td><td>${fmt(r)}</td><td>${fmt(a)}</td>`
+        : `<td class="empty">—</td><td class="empty">—</td><td class="empty">—</td>`;
+    });
+    const d=pTot[p];
+    h += `<td class="itogo cnt">${d.cnt||'—'}</td><td class="itogo">${fmt(d.rev)}</td><td class="itogo">${fmt(d.avgDeal)}</td>`;
+    h += '</tr>';
+  });
+  h += '</tbody><tfoot>';
+
+  // Total row
+  h += '<tr class="total-row"><td class="label">TOTAL</td>';
+  MONTHS.forEach((_,mi) => {
+    const mt=mTot[mi];
+    h += `<td>${mt.cnt}</td><td>${fmt(mt.rev)}</td><td>${fmt(mt.avgDeal)}</td>`;
+  });
+  h += `<td class="itogo">${TOTAL_CNT}</td><td class="itogo">${fmt(TOTAL_REV)}</td><td class="itogo">${fmt(Math.round(TOTAL_REV/TOTAL_CNT))}</td></tr>`;
+
+  // Mean row
+  h += '<tr class="mean-row"><td class="label">Avg (active partners)</td>';
+  MONTHS.forEach((_,mi) => {
+    const active=PARTNERS.map(p=>RAW[p][mi]).filter(([c])=>c>0);
+    if(!active.length){h+='<td>—</td><td>—</td><td>—</td>';return;}
+    const tc=active.reduce((s,[c])=>s+c,0),tr=active.reduce((s,[,r])=>s+r,0);
+    const mc=Math.round(tc/active.length),mr=Math.round(tr/active.length);
+    const ma=Math.round(active.reduce((s,[c,r])=>s+r/c,0)/active.length);
+    h+=`<td>${mc}</td><td>${fmt(mr)}</td><td>${fmt(ma)}</td>`;
+  });
+  h+=`<td>${mMean.cnt}</td><td>${fmt(mMean.rev)}</td><td>${fmt(mMean.avgDeal)}</td></tr>`;
+
+  // Median row
+  h += '<tr class="med-row"><td class="label">Median (active partners)</td>';
+  MONTHS.forEach((_,mi) => {
+    const active=PARTNERS.map(p=>RAW[p][mi]).filter(([c])=>c>0);
+    if(!active.length){h+='<td>—</td><td>—</td><td>—</td>';return;}
+    const srt=arr=>[...arr].sort((a,b)=>a-b);
+    const med=arr=>{const s=srt(arr);const m=Math.floor(s.length/2);return s.length%2?Math.round(s[m]):Math.round((s[m-1]+s[m])/2);};
+    h+=`<td>${med(active.map(([c])=>c))}</td><td>${fmt(med(active.map(([,r])=>r)))}</td><td>${fmt(med(active.map(([c,r])=>r/c)))}</td>`;
+  });
+  h+=`<td>${mMed.cnt}</td><td>${fmt(mMed.rev)}</td><td>${fmt(mMed.avgDeal)}</td></tr>`;
+  h+='</tfoot></table>';
+  document.getElementById('tableV2Wrap').innerHTML = h;
+}
+
+// ── Init ────────────────────────────────────────────
+buildCharts();
+buildTableV1();
+buildTableV2();
+</script>
+</body>
+</html>
